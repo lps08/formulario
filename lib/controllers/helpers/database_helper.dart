@@ -1,4 +1,3 @@
-//TODO: implement database helper
 import 'package:mysql1/mysql1.dart';
 
 class DatabaseHelper {
