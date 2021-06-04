@@ -1,11 +1,11 @@
 import 'package:mysql1/mysql1.dart';
 
 class DatabaseHelper {
-  static final _host = '';
-  static final _port = 0;
-  static final _user = '';
-  static final _databaseName = '';
-  static final _passwd = '';
+  static final _host = 'bddados.amsolution.net.br';
+  static final _port = 10001;
+  static final _user = 'app';
+  static final _databaseName = 'form_med';
+  static final _passwd = 'apppr@8308';
 
   //connect to mysql database
   static Future<MySqlConnection> connectDatabase() async {
@@ -16,4 +16,8 @@ class DatabaseHelper {
         db: _databaseName,
         password: _passwd));
   }
+}
+
+main(List<String> args) async {
+  DatabaseHelper.connectDatabase().then((value) => print('foi'));
 }
