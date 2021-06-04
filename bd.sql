@@ -8,10 +8,10 @@ CREATE TABLE Cliente (
     sexo                    varchar(20),
     nascimento              DATETIME,
     raca                    varchar(20),
-    telefone                INT,
+    telefone                BIGINT,
     endereco                varchar(50),
     bairro                  varchar(20),
-    Municipio               varchar(20),
+    municipio               varchar(20),
     PRIMARY KEY(id)
 );
 
