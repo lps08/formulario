@@ -1,4 +1,3 @@
-//TODO: implement abastract class
 import 'package:formulario/controllers/helpers/database_helper.dart';
 import 'package:formulario/models/model.dart';
 import 'package:mysql1/mysql1.dart';
@@ -14,8 +13,7 @@ abstract class DAO<T extends Model> {
 
     Results res = await connection.query(query);
 
-    if (res.insertId!.isNaN) return false;
-    return true;
+    return _queryResult(res);
   }
 
   Future<bool> delete(
@@ -25,26 +23,24 @@ abstract class DAO<T extends Model> {
 
     Results res = await connection.query(query);
 
+    return _queryResult(res);
+  }
+
+  Future<bool> update(T) async {
+    MySqlConnection connection = await DatabaseHelper.connectDatabase();
+    String query =
+        'UPDATE tabela SET ${T.toMap().toString().substring(1, T.toMap().toString().length - 1).replaceAll(':', '=')} WHERE id = T.id;';
+
+    Results res = await connection.query(query);
+
+    return _queryResult(res);
+  }
+
+  Future<List<T>> get(String value);
+  Future<List<T>> getAll();
+
+  bool _queryResult(Results res) {
     if (res.insertId!.isNaN) return false;
     return true;
   }
-
-  Future<void> update(T) async {}
-
-  Future<List<T>> get(int codebars);
-  Future<List<T>> getAll();
-}
-
-main(List<String> args) {
-  Map<String, dynamic> teste = {
-    'nome': 'nome',
-    'numero': 10,
-  };
-
-  String where = 'cod';
-  dynamic whereArgs = '1';
-
-  String query = 'DELETE FROM tabela WHERE $where = $whereArgs;';
-
-  print(query);
 }
