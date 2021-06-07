@@ -1,26 +1,26 @@
 import 'package:formulario/models/model.dart';
 
 class Client implements Model {
-  final int id;
+  late int? id;
   final String nome;
   final String sexo;
   final String nascimento;
-  final String raca;
+  final String? raca;
   final String telefone;
-  final String endereco;
-  final String bairro;
-  final String municipio;
+  final String? endereco;
+  final String? bairro;
+  final String? municipio;
 
   Client({
-    required this.id,
+    this.id,
     required this.nome,
     required this.sexo,
     required this.nascimento,
-    required this.raca,
+    this.raca,
     required this.telefone,
-    required this.endereco,
-    required this.bairro,
-    required this.municipio,
+    this.endereco,
+    this.bairro,
+    this.municipio,
   });
 
   factory Client.fromMap(Map<String, dynamic> json) => Client(
@@ -37,7 +37,6 @@ class Client implements Model {
 
   @override
   Map<String, dynamic> toMap() => {
-        'id': id,
         'nome': nome,
         'sexo': sexo,
         'nascimento': nascimento,
