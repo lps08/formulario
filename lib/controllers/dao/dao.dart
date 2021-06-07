@@ -8,6 +8,7 @@ abstract class DAO<T extends Model> {
   Future<bool> insert(T) async {
     // INSERT INTO Cliente (nome, sexo, nascimento, raca, telefone, endereco, bairro, municipio) VALUES ('Cliente 1', 'masculino', '2021-06-04', 'branca', 086999948302, 'Rua meclanche', 'cria', 'Piaui');
     MySqlConnection connection = await DatabaseHelper.connectDatabase();
+    //TODO: fix the values to list to use (?, [])
     String query =
         'INSERT INTO $table (${T.toMap().keys.join(',')}) VALUES (${T.toMap().values.join(',')});';
 
@@ -38,6 +39,18 @@ abstract class DAO<T extends Model> {
 
   Future<List<T>> get(String value);
   Future<List<T>> getAll();
+
+  List<String> _preprocessValues(List<String> inputValues) {
+    print(inputValues);
+    List<String> values = [];
+    inputValues.forEach((value) {
+      if (value is String)
+        values.add("'$value'");
+      else
+        values.add(value);
+    });
+    return values;
+  }
 
   bool _queryResult(Results res) {
     if (res.insertId!.isNaN) return false;
