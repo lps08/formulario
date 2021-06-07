@@ -2,7 +2,7 @@ import 'package:mysql1/mysql1.dart';
 
 class DatabaseHelper {
   static final _host = 'bddados.amsolution.net.br';
-  static final _port = 10001;
+  static final _port = 3306;
   static final _user = 'app';
   static final _databaseName = 'form_med';
   static final _passwd = 'apppr@8308';

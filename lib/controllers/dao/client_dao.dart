@@ -12,7 +12,7 @@ class ClientDAO extends DAO<Client> {
     // get db connection
     MySqlConnection connection = await DatabaseHelper.connectDatabase();
     // query to mysql database
-    String query = 'SELECT * FROM $table WHERE nome = $value';
+    String query = "SELECT * FROM $table WHERE nome = '$value'";
     // return clients list
     List<Client> clients = [];
 
