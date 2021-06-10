@@ -1,59 +1,63 @@
-import 'package:formulario/controllers/helpers/database_helper.dart';
+import 'dart:convert';
+import 'package:formulario/controllers/helpers/api.dart';
 import 'package:formulario/models/model.dart';
-import 'package:mysql1/mysql1.dart';
+import 'package:http/http.dart' as http;
 
 abstract class DAO<T extends Model> {
   late String table;
 
-  Future<bool> insert(T) async {
-    // INSERT INTO Cliente (nome, sexo, nascimento, raca, telefone, endereco, bairro, municipio) VALUES ('Cliente 1', 'masculino', '2021-06-04', 'branca', 086999948302, 'Rua meclanche', 'cria', 'Piaui');
-    MySqlConnection connection = await DatabaseHelper.connectDatabase();
-    //TODO: fix the values to list to use (?, [])
-    String query =
-        'INSERT INTO $table (${T.toMap().keys.join(',')}) VALUES (${T.toMap().values.join(',')});';
-
-    Results res = await connection.query(query);
-
-    return _queryResult(res);
+  Future<int> insert(T) async {
+    http.Response res = await API.post(
+      table: table,
+      operation: 'insert',
+      json: T.toMap(),
+    );
+    return res.statusCode;
   }
 
-  Future<bool> delete(
+  Future<int> delete(
       {required String where, required dynamic whereArgs}) async {
-    MySqlConnection connection = await DatabaseHelper.connectDatabase();
-    String query = 'DELETE FROM $table WHERE $where = $whereArgs;';
-
-    Results res = await connection.query(query);
-
-    return _queryResult(res);
+    http.Response res = await API.post(
+      table: table,
+      operation: 'delete',
+      json: json.encode(<String, String>{
+        "where": where,
+        "whereArgs": whereArgs,
+      }),
+    );
+    return res.statusCode;
   }
 
-  Future<bool> update(T) async {
-    MySqlConnection connection = await DatabaseHelper.connectDatabase();
-    String query =
-        'UPDATE tabela SET ${T.toMap().toString().substring(1, T.toMap().toString().length - 1).replaceAll(':', '=')} WHERE id = T.id;';
-
-    Results res = await connection.query(query);
-
-    return _queryResult(res);
+  Future<int> update(T) async {
+    http.Response res = await API.post(
+      table: table,
+      operation: 'update',
+      json: T.toMap(),
+    );
+    return res.statusCode;
   }
 
-  Future<List<T>> get(String value);
-  Future<List<T>> getAll();
-
-  List<String> _preprocessValues(List<String> inputValues) {
-    print(inputValues);
-    List<String> values = [];
-    inputValues.forEach((value) {
-      if (value is String)
-        values.add("'$value'");
-      else
-        values.add(value);
-    });
-    return values;
+  Future<dynamic> get(
+      {required String where, required dynamic whereArgs}) async {
+    http.Response res = await API.post(
+        table: table,
+        operation: 'get',
+        json: json.encode(<String, String>{
+          "where": where,
+          "whereArgs": whereArgs,
+        }));
+    if (res.statusCode == 201) {
+      return jsonDecode(res.body);
+    } else {
+      throw Exception('Failed to get data.');
+    }
   }
 
-  bool _queryResult(Results res) {
-    if (res.insertId!.isNaN) return false;
-    return true;
+  Future<dynamic> getAll() async {
+    http.Response res = await API.get(
+      table: table,
+      operation: 'getAll',
+    );
+    return res.statusCode;
   }
 }
