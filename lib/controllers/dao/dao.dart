@@ -58,6 +58,11 @@ abstract class DAO<T extends Model> {
       table: table,
       operation: 'getAll',
     );
-    return res.statusCode;
+
+    if (res.statusCode == 201) {
+      return jsonDecode(res.body);
+    } else {
+      throw Exception('Failed to get data.');
+    }
   }
 }
