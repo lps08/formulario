@@ -59,7 +59,7 @@ abstract class DAO<T extends Model> {
       operation: 'getAll',
     );
 
-    if (res.statusCode == 201) {
+    if (res.statusCode == 200) {
       return jsonDecode(res.body);
     } else {
       throw Exception('Failed to get data.');
