@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:formulario/views/screens/home_screen.dart';
+import 'package:formulario/views/screens/register_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        '/': (context) => Home(title: 'Home screen'),
+        '/': (context) => RegisterPage(),
       },
       initialRoute: '/',
     );
