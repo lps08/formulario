@@ -1,3 +1,4 @@
+import 'package:formulario/models/atendiamento.dart';
 import 'package:formulario/models/model.dart';
 
 class Client implements Model {
@@ -10,6 +11,7 @@ class Client implements Model {
   final String? endereco;
   final String? bairro;
   final String? municipio;
+  final Atendimento? atendimento;
 
   Client({
     this.id,
@@ -21,6 +23,7 @@ class Client implements Model {
     this.endereco,
     this.bairro,
     this.municipio,
+    this.atendimento,
   });
 
   factory Client.fromMap(Map<String, dynamic> json) => Client(
