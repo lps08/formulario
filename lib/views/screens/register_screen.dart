@@ -9,8 +9,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  bool masc = false;
-  bool fem = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
