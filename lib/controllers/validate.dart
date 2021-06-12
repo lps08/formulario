@@ -1,4 +1,4 @@
-class Validade {
+class Validate {
   static String? onlyString(String nome) {
     if (nome.contains(RegExp(r'[0-9]')))
       return 'Valores numéricos não são permitidos';
