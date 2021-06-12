@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:formulario/controllers/validate.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -31,6 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             InputTextFieldRegister(
+              inputKeyboradType: TextInputType.name,
               hintText: 'Nome',
               validator: (value) => Validate.onlyString(value!),
             ),
@@ -186,12 +188,17 @@ class _CheckBoxCardState extends State<CheckBoxCard> {
 class InputTextFieldRegister extends StatelessWidget {
   final String hintText;
   final String? Function(String? value)? validator;
+  final TextInputType inputKeyboradType;
 
-  InputTextFieldRegister({required this.hintText, this.validator});
+  InputTextFieldRegister(
+      {required this.hintText,
+      this.validator,
+      required this.inputKeyboradType});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: inputKeyboradType,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
