@@ -45,7 +45,32 @@ class _RegisterPageState extends State<RegisterPage> {
             InputDateRegister(
               hintText: 'Data de nascimento',
               dateSelected: (date) => print(date.toString()),
-            )
+            ),
+            SizedBox(height: 20),
+            InputTextFieldRegister(
+              hintText: 'Raça',
+              inputKeyboradType: TextInputType.name,
+            ),
+            SizedBox(height: 20),
+            InputTextFieldRegister(
+              hintText: 'Telefone',
+              inputKeyboradType: TextInputType.phone,
+            ),
+            SizedBox(height: 20),
+            InputTextFieldRegister(
+              hintText: 'Endereço',
+              inputKeyboradType: TextInputType.streetAddress,
+            ),
+            SizedBox(height: 20),
+            InputTextFieldRegister(
+              hintText: 'Bairro',
+              inputKeyboradType: TextInputType.name,
+            ),
+            SizedBox(height: 20),
+            InputTextFieldRegister(
+              hintText: 'Município',
+              inputKeyboradType: TextInputType.name,
+            ),
           ],
         ),
       )),
