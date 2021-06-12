@@ -8,6 +8,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  bool masc = false;
+  bool fem = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
               },
             ),
             SizedBox(height: 20),
-            GenderSelect(),
+            CheckBoxCard(),
           ],
         ),
       )),
@@ -47,116 +49,130 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 }
 
-class GenderSelect extends StatefulWidget {
-  @override
-  _GenderSelectState createState() => _GenderSelectState();
-}
-
-class _GenderSelectState extends State<GenderSelect> {
-  bool? masc = false;
-  bool? fem = false;
-  bool? outro = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Text('Genero'),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CheckBoxCard(
-                title: 'Masculino',
-                checked: masc!,
-                onChanged: (value) {
-                  setState(() {
-                    if (value == true) {
-                      masc = value;
-                      fem = false;
-                      outro = false;
-                    }
-                  });
-                },
-              ),
-              CheckBoxCard(
-                title: 'Feminino',
-                checked: fem!,
-                onChanged: (value) {
-                  setState(() {
-                    if (value == true) {
-                      fem = value;
-                      masc = false;
-                      outro = false;
-                    }
-                  });
-                },
-              ),
-              CheckBoxCard(
-                title: 'Outro',
-                checked: outro!,
-                onChanged: (value) {
-                  setState(() {
-                    if (value == true) {
-                      outro = value;
-                      fem = false;
-                      masc = false;
-                    }
-                  });
-                },
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
 class CheckBoxCard extends StatefulWidget {
-  final String title;
-  final bool checked;
-  final String? Function(bool? value)? onChanged;
-  CheckBoxCard({required this.title, required this.checked, this.onChanged});
-
   @override
-  _CheckBoxCardState createState() =>
-      _CheckBoxCardState(title: title, checked: checked, onChanged: onChanged);
+  _CheckBoxCardState createState() => _CheckBoxCardState();
 }
 
 class _CheckBoxCardState extends State<CheckBoxCard> {
-  final String title;
-  final String? Function(bool? value)? onChanged;
-  bool? checked;
-
-  _CheckBoxCardState(
-      {required this.title, required this.checked, this.onChanged});
+  bool? _checkedFem = false;
+  bool? _checkedMasc = false;
+  bool? _checkedOutro = false;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
-        border: Border.all(
-          color: checked! ? Colors.blue : Colors.grey,
-          width: 1.5,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(8.0, 8.0, 18.0, 8.0),
-        child: Row(
-          children: [
-            Checkbox(
-              value: checked,
-              onChanged: (value) => onChanged!(value),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            border: Border.all(
+              color: _checkedMasc! ? Colors.blue : Colors.grey,
+              width: 1.5,
             ),
-            Text(
-              title,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ],
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 8.0, 18.0, 8.0),
+                child: Row(
+                  children: [
+                    Checkbox(
+                      value: _checkedMasc!,
+                      onChanged: (value) {
+                        setState(() {
+                          _checkedMasc = value;
+                          if (value == true) {
+                            _checkedFem = false;
+                            _checkedOutro = false;
+                          }
+                        });
+                      },
+                    ),
+                    Text(
+                      'Masculino',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            border: Border.all(
+              color: _checkedFem! ? Colors.blue : Colors.grey,
+              width: 1.5,
+            ),
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 8.0, 18.0, 8.0),
+                child: Row(
+                  children: [
+                    Checkbox(
+                      value: _checkedFem!,
+                      onChanged: (value) {
+                        setState(() {
+                          _checkedFem = value;
+                          if (value == true) {
+                            _checkedMasc = false;
+                            _checkedOutro = false;
+                          }
+                        });
+                      },
+                    ),
+                    Text(
+                      'Feminino',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            border: Border.all(
+              color: _checkedOutro! ? Colors.blue : Colors.grey,
+              width: 1.5,
+            ),
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 8.0, 18.0, 8.0),
+                child: Row(
+                  children: [
+                    Checkbox(
+                      value: _checkedOutro!,
+                      onChanged: (value) {
+                        setState(() {
+                          _checkedOutro = value;
+                          if (value == true) {
+                            _checkedFem = false;
+                            _checkedMasc = false;
+                          }
+                        });
+                      },
+                    ),
+                    Text(
+                      'Outro',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }
