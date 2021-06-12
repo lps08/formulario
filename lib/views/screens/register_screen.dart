@@ -51,26 +51,31 @@ class _RegisterPageState extends State<RegisterPage> {
               InputTextFieldRegister(
                 hintText: 'Raça',
                 inputKeyboradType: TextInputType.name,
+                validator: (value) => Validate.onlyString(value!),
               ),
               SizedBox(height: 20),
               InputTextFieldRegister(
                 hintText: 'Telefone',
                 inputKeyboradType: TextInputType.phone,
+                validator: (value) => Validate.onlyNumber(value!),
               ),
               SizedBox(height: 20),
               InputTextFieldRegister(
                 hintText: 'Endereço',
                 inputKeyboradType: TextInputType.streetAddress,
+                validator: (value) => Validate.onlyString(value!),
               ),
               SizedBox(height: 20),
               InputTextFieldRegister(
                 hintText: 'Bairro',
                 inputKeyboradType: TextInputType.name,
+                validator: (value) => Validate.onlyString(value!),
               ),
               SizedBox(height: 20),
               InputTextFieldRegister(
                 hintText: 'Município',
                 inputKeyboradType: TextInputType.name,
+                validator: (value) => Validate.onlyString(value!),
               ),
             ],
           ),
