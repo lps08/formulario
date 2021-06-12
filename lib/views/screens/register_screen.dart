@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:formulario/controllers/validate.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -40,6 +41,11 @@ class _RegisterPageState extends State<RegisterPage> {
             CheckBoxCard(
               onPressed: (result) => print(result),
             ),
+            SizedBox(height: 20),
+            InputDateRegister(
+              hintText: 'Data de nascimento',
+              dateSelected: (date) => print(date.toString()),
+            )
           ],
         ),
       )),
@@ -207,6 +213,48 @@ class InputTextFieldRegister extends StatelessWidget {
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) => validator!(value),
+    );
+  }
+}
+
+class InputDateRegister extends StatefulWidget {
+  final String hintText;
+  final void Function(DateTime date)? dateSelected;
+
+  InputDateRegister({required this.hintText, this.dateSelected});
+  @override
+  _InputDateRegisterState createState() =>
+      _InputDateRegisterState(hintText: hintText, dateSelected: dateSelected);
+}
+
+class _InputDateRegisterState extends State<InputDateRegister> {
+  final String hintText;
+  final void Function(DateTime date)? dateSelected;
+  TextEditingController _controller = TextEditingController();
+
+  _InputDateRegisterState({required this.hintText, this.dateSelected});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      readOnly: true,
+      onTap: () {
+        DatePicker.showDatePicker(
+          context,
+          locale: LocaleType.pt,
+          onConfirm: (time) {
+            dateSelected!(time);
+            _controller.text = '${time.day}/${time.month}/${time.year}';
+          },
+        );
+      },
+      controller: _controller,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        hintText: hintText,
+      ),
     );
   }
 }
