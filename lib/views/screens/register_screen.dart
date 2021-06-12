@@ -37,7 +37,9 @@ class _RegisterPageState extends State<RegisterPage> {
               validator: (value) => Validate.onlyString(value!),
             ),
             SizedBox(height: 20),
-            CheckBoxCard(),
+            CheckBoxCard(
+              onPressed: (result) => print(result),
+            ),
           ],
         ),
       )),
@@ -46,14 +48,21 @@ class _RegisterPageState extends State<RegisterPage> {
 }
 
 class CheckBoxCard extends StatefulWidget {
+  final void Function(String result)? onPressed;
+
+  CheckBoxCard({this.onPressed});
+
   @override
-  _CheckBoxCardState createState() => _CheckBoxCardState();
+  _CheckBoxCardState createState() => _CheckBoxCardState(onPressed: onPressed);
 }
 
 class _CheckBoxCardState extends State<CheckBoxCard> {
   bool? _checkedFem = false;
   bool? _checkedMasc = false;
   bool? _checkedOutro = false;
+  void Function(String result)? onPressed;
+
+  _CheckBoxCardState({this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +89,7 @@ class _CheckBoxCardState extends State<CheckBoxCard> {
                         setState(() {
                           _checkedMasc = value;
                           if (value == true) {
+                            onPressed!('Masculino');
                             _checkedFem = false;
                             _checkedOutro = false;
                           }
@@ -116,6 +126,7 @@ class _CheckBoxCardState extends State<CheckBoxCard> {
                         setState(() {
                           _checkedFem = value;
                           if (value == true) {
+                            onPressed!('Feminino');
                             _checkedMasc = false;
                             _checkedOutro = false;
                           }
@@ -152,6 +163,7 @@ class _CheckBoxCardState extends State<CheckBoxCard> {
                         setState(() {
                           _checkedOutro = value;
                           if (value == true) {
+                            onPressed!('Outro');
                             _checkedFem = false;
                             _checkedMasc = false;
                           }
