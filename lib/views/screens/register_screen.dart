@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:formulario/controllers/validate.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -33,12 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             InputTextFieldRegister(
               hintText: 'Nome',
-              validator: (value) {
-                if (value!.contains(RegExp(r'[0-9]'))) {
-                  return 'Valores numéricos não são permitidos';
-                }
-                return null;
-              },
+              validator: (value) => Validate.onlyString(value!),
             ),
             SizedBox(height: 20),
             CheckBoxCard(),
