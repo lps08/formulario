@@ -20,58 +20,60 @@ class _RegisterPageState extends State<RegisterPage> {
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(50.0),
-              child: Container(
-                height: 100,
-                width: 100,
-                child: FittedBox(
-                  child: Icon(Icons.account_circle_rounded),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(50.0),
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  child: FittedBox(
+                    child: Icon(Icons.account_circle_rounded),
+                  ),
                 ),
               ),
-            ),
-            InputTextFieldRegister(
-              inputKeyboradType: TextInputType.name,
-              hintText: 'Nome',
-              validator: (value) => Validate.onlyString(value!),
-            ),
-            SizedBox(height: 20),
-            CheckBoxCard(
-              onPressed: (result) => print(result),
-            ),
-            SizedBox(height: 20),
-            InputDateRegister(
-              hintText: 'Data de nascimento',
-              dateSelected: (date) => print(date.toString()),
-            ),
-            SizedBox(height: 20),
-            InputTextFieldRegister(
-              hintText: 'Raça',
-              inputKeyboradType: TextInputType.name,
-            ),
-            SizedBox(height: 20),
-            InputTextFieldRegister(
-              hintText: 'Telefone',
-              inputKeyboradType: TextInputType.phone,
-            ),
-            SizedBox(height: 20),
-            InputTextFieldRegister(
-              hintText: 'Endereço',
-              inputKeyboradType: TextInputType.streetAddress,
-            ),
-            SizedBox(height: 20),
-            InputTextFieldRegister(
-              hintText: 'Bairro',
-              inputKeyboradType: TextInputType.name,
-            ),
-            SizedBox(height: 20),
-            InputTextFieldRegister(
-              hintText: 'Município',
-              inputKeyboradType: TextInputType.name,
-            ),
-          ],
+              InputTextFieldRegister(
+                inputKeyboradType: TextInputType.name,
+                hintText: 'Nome',
+                validator: (value) => Validate.onlyString(value!),
+              ),
+              SizedBox(height: 20),
+              CheckBoxCard(
+                onPressed: (result) => print(result),
+              ),
+              SizedBox(height: 20),
+              InputDateRegister(
+                hintText: 'Data de nascimento',
+                dateSelected: (date) => print(date.toString()),
+              ),
+              SizedBox(height: 20),
+              InputTextFieldRegister(
+                hintText: 'Raça',
+                inputKeyboradType: TextInputType.name,
+              ),
+              SizedBox(height: 20),
+              InputTextFieldRegister(
+                hintText: 'Telefone',
+                inputKeyboradType: TextInputType.phone,
+              ),
+              SizedBox(height: 20),
+              InputTextFieldRegister(
+                hintText: 'Endereço',
+                inputKeyboradType: TextInputType.streetAddress,
+              ),
+              SizedBox(height: 20),
+              InputTextFieldRegister(
+                hintText: 'Bairro',
+                inputKeyboradType: TextInputType.name,
+              ),
+              SizedBox(height: 20),
+              InputTextFieldRegister(
+                hintText: 'Município',
+                inputKeyboradType: TextInputType.name,
+              ),
+            ],
+          ),
         ),
       )),
     );
