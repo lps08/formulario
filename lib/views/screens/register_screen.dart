@@ -11,6 +11,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  Map<String, dynamic>? cliente = {};
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,69 +19,90 @@ class _RegisterPageState extends State<RegisterPage> {
         title: Text('Cadastro cliente'),
       ),
       body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  child: FittedBox(
-                    child: Icon(Icons.account_circle_rounded),
-                  ),
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(50.0),
+                      child: Container(
+                        height: 100,
+                        width: 100,
+                        child: FittedBox(
+                          child: Icon(Icons.account_circle_rounded),
+                        ),
+                      ),
+                    ),
+                    InputTextFieldRegister(
+                      inputKeyboradType: TextInputType.name,
+                      hintText: 'Nome',
+                      validator: (value) => Validate.onlyString(value!),
+                      onEditing: (value) => cliente!['nome'] = value,
+                    ),
+                    SizedBox(height: 20),
+                    CheckBoxCard(
+                      onPressed: (result) =>
+                          cliente!['sexo'] = result.toLowerCase(),
+                    ),
+                    SizedBox(height: 20),
+                    InputDateRegister(
+                      hintText: 'Data de nascimento',
+                      dateSelected: (date) =>
+                          cliente!['nascimento'] = date.toUtc().toString(),
+                    ),
+                    SizedBox(height: 20),
+                    InputTextFieldRegister(
+                      hintText: 'Raça',
+                      inputKeyboradType: TextInputType.name,
+                      validator: (value) => Validate.onlyString(value!),
+                      onEditing: (value) => cliente!['raca'] = value,
+                    ),
+                    SizedBox(height: 20),
+                    InputTextFieldRegister(
+                      hintText: 'Telefone',
+                      inputKeyboradType: TextInputType.phone,
+                      validator: (value) => Validate.onlyNumber(value!),
+                      onEditing: (value) => cliente!['telefone'] = value,
+                    ),
+                    SizedBox(height: 20),
+                    InputTextFieldRegister(
+                      hintText: 'Endereço',
+                      inputKeyboradType: TextInputType.streetAddress,
+                      validator: (value) => Validate.onlyString(value!),
+                      onEditing: (value) => cliente!['endereco'],
+                    ),
+                    SizedBox(height: 20),
+                    InputTextFieldRegister(
+                      hintText: 'Bairro',
+                      inputKeyboradType: TextInputType.name,
+                      validator: (value) => Validate.onlyString(value!),
+                      onEditing: (value) => cliente!['bairro'] = value,
+                    ),
+                    SizedBox(height: 20),
+                    InputTextFieldRegister(
+                      hintText: 'Município',
+                      inputKeyboradType: TextInputType.name,
+                      validator: (value) => Validate.onlyString(value!),
+                      onEditing: (value) => cliente!['municipio'] = value,
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                  ],
                 ),
               ),
-              InputTextFieldRegister(
-                inputKeyboradType: TextInputType.name,
-                hintText: 'Nome',
-                validator: (value) => Validate.onlyString(value!),
-              ),
-              SizedBox(height: 20),
-              CheckBoxCard(
-                onPressed: (result) => print(result),
-              ),
-              SizedBox(height: 20),
-              InputDateRegister(
-                hintText: 'Data de nascimento',
-                dateSelected: (date) => print(date.toString()),
-              ),
-              SizedBox(height: 20),
-              InputTextFieldRegister(
-                hintText: 'Raça',
-                inputKeyboradType: TextInputType.name,
-                validator: (value) => Validate.onlyString(value!),
-              ),
-              SizedBox(height: 20),
-              InputTextFieldRegister(
-                hintText: 'Telefone',
-                inputKeyboradType: TextInputType.phone,
-                validator: (value) => Validate.onlyNumber(value!),
-              ),
-              SizedBox(height: 20),
-              InputTextFieldRegister(
-                hintText: 'Endereço',
-                inputKeyboradType: TextInputType.streetAddress,
-                validator: (value) => Validate.onlyString(value!),
-              ),
-              SizedBox(height: 20),
-              InputTextFieldRegister(
-                hintText: 'Bairro',
-                inputKeyboradType: TextInputType.name,
-                validator: (value) => Validate.onlyString(value!),
-              ),
-              SizedBox(height: 20),
-              InputTextFieldRegister(
-                hintText: 'Município',
-                inputKeyboradType: TextInputType.name,
-                validator: (value) => Validate.onlyString(value!),
+              ElevatedButton(
+                onPressed: () => print(cliente),
+                child: Text('Confirmar'),
               ),
             ],
           ),
         ),
-      )),
+      ),
     );
   }
 }
@@ -227,11 +249,14 @@ class InputTextFieldRegister extends StatelessWidget {
   final String hintText;
   final String? Function(String? value)? validator;
   final TextInputType inputKeyboradType;
+  final void Function(dynamic value)? onEditing;
 
-  InputTextFieldRegister(
-      {required this.hintText,
-      this.validator,
-      required this.inputKeyboradType});
+  InputTextFieldRegister({
+    required this.hintText,
+    this.validator,
+    required this.inputKeyboradType,
+    this.onEditing,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -244,6 +269,7 @@ class InputTextFieldRegister extends StatelessWidget {
         hintText: hintText,
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      onChanged: (value) => onEditing!(value),
       validator: (value) => validator!(value),
     );
   }
