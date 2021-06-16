@@ -22,99 +22,124 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(50.0),
-                      child: Container(
-                        height: 100,
-                        width: 100,
-                        child: FittedBox(
-                          child: Icon(Icons.account_circle_rounded),
-                        ),
-                      ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(50.0),
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    child: FittedBox(
+                      child: Icon(Icons.account_circle_rounded),
                     ),
-                    InputTextFieldRegister(
-                      inputKeyboradType: TextInputType.name,
-                      hintText: 'Nome',
-                      validator: (value) => Validate.onlyString(value!),
-                      onEditing: (value) => cliente!['nome'] = value,
-                    ),
-                    SizedBox(height: 20),
-                    CheckBoxCard(
-                      onPressed: (result) =>
-                          cliente!['sexo'] = result.toLowerCase(),
-                    ),
-                    SizedBox(height: 20),
-                    InputDateRegister(
-                      hintText: 'Data de nascimento',
-                      dateSelected: (date) => cliente!['nascimento'] =
-                          date.toUtc().toString().split(' ')[0],
-                    ),
-                    SizedBox(height: 20),
-                    InputTextFieldRegister(
-                      hintText: 'Raça',
-                      inputKeyboradType: TextInputType.name,
-                      validator: (value) => Validate.onlyString(value!),
-                      onEditing: (value) => cliente!['raca'] = value,
-                    ),
-                    SizedBox(height: 20),
-                    InputTextFieldRegister(
-                      hintText: 'Telefone',
-                      inputKeyboradType: TextInputType.phone,
-                      validator: (value) => Validate.onlyNumber(value!),
-                      onEditing: (value) => cliente!['telefone'] = value,
-                    ),
-                    SizedBox(height: 20),
-                    InputTextFieldRegister(
-                      hintText: 'Endereço',
-                      inputKeyboradType: TextInputType.streetAddress,
-                      validator: (value) => Validate.onlyString(value!),
-                      onEditing: (value) => cliente!['endereco'] = value,
-                    ),
-                    SizedBox(height: 20),
-                    InputTextFieldRegister(
-                      hintText: 'Bairro',
-                      inputKeyboradType: TextInputType.name,
-                      validator: (value) => Validate.onlyString(value!),
-                      onEditing: (value) => cliente!['bairro'] = value,
-                    ),
-                    SizedBox(height: 20),
-                    InputTextFieldRegister(
-                      hintText: 'Município',
-                      inputKeyboradType: TextInputType.name,
-                      validator: (value) => Validate.onlyString(value!),
-                      onEditing: (value) => cliente!['municipio'] = value,
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              ElevatedButton(
-                child: Text('Confirmar'),
-                onPressed: () async {
-                  Client clinet = Client.fromMap(cliente!);
-                  print(clinet.toMap());
-                  ClientDAO clientDAO = ClientDAO();
-                  String res = await clientDAO.insert(clinet);
-
-                  if (res == 'success')
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Usuario adicionado')));
-                  else
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text('Erro!')));
-                },
-              ),
-            ],
+                InputTextFieldRegister(
+                  inputKeyboradType: TextInputType.name,
+                  hintText: 'Nome',
+                  validator: (value) => Validate.onlyString(value!),
+                  onEditing: (value) => cliente!['nome'] = value,
+                ),
+                SizedBox(height: 20),
+                CheckBoxCard(
+                  onPressed: (result) =>
+                      cliente!['sexo'] = result.toLowerCase(),
+                ),
+                SizedBox(height: 20),
+                InputDateRegister(
+                  hintText: 'Data de nascimento',
+                  dateSelected: (date) => cliente!['nascimento'] =
+                      date.toUtc().toString().split(' ')[0],
+                ),
+                SizedBox(height: 20),
+                InputTextFieldRegister(
+                  hintText: 'Raça',
+                  inputKeyboradType: TextInputType.name,
+                  validator: (value) => Validate.onlyString(value!),
+                  onEditing: (value) => cliente!['raca'] = value,
+                ),
+                SizedBox(height: 20),
+                InputTextFieldRegister(
+                  hintText: 'Telefone',
+                  inputKeyboradType: TextInputType.phone,
+                  validator: (value) => Validate.onlyNumber(value!),
+                  onEditing: (value) => cliente!['telefone'] = value,
+                ),
+                SizedBox(height: 20),
+                InputTextFieldRegister(
+                  hintText: 'Endereço',
+                  inputKeyboradType: TextInputType.streetAddress,
+                  validator: (value) => Validate.onlyString(value!),
+                  onEditing: (value) => cliente!['endereco'] = value,
+                ),
+                SizedBox(height: 20),
+                InputTextFieldRegister(
+                  hintText: 'Bairro',
+                  inputKeyboradType: TextInputType.name,
+                  validator: (value) => Validate.onlyString(value!),
+                  onEditing: (value) => cliente!['bairro'] = value,
+                ),
+                SizedBox(height: 20),
+                InputTextFieldRegister(
+                  hintText: 'Município',
+                  inputKeyboradType: TextInputType.name,
+                  validator: (value) => Validate.onlyString(value!),
+                  onEditing: (value) => cliente!['municipio'] = value,
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+              ],
+            ),
           ),
+        ),
+      ),
+      bottomNavigationBar: ButtonConfirmarBottom(cliente: cliente),
+    );
+  }
+}
+
+class ButtonConfirmarBottom extends StatelessWidget {
+  const ButtonConfirmarBottom({
+    Key? key,
+    required this.cliente,
+  }) : super(key: key);
+
+  final Map<String, dynamic>? cliente;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () async {
+        Client clinet = Client.fromMap(cliente!);
+        print(clinet.toMap());
+        ClientDAO clientDAO = ClientDAO();
+        String res = await clientDAO.insert(clinet);
+
+        if (res == 'success')
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Usuario adicionado')));
+        else
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('Erro!')));
+      },
+      child: Container(
+        width: double.infinity,
+        color: Theme.of(context).primaryColor,
+        height: 60.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Confirmar',
+              style: TextStyle(
+                  color: Theme.of(context).accentTextTheme.bodyText1!.color,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24),
+            ),
+          ],
         ),
       ),
     );
