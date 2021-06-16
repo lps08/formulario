@@ -12,6 +12,11 @@ class ListCardsPage extends StatefulWidget {
 class _ListCardsPageState extends State<ListCardsPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Lista clientes'),
+      ),
+      body: Container(),
+    );
   }
 }
