@@ -6,16 +6,16 @@ import 'package:http/http.dart' as http;
 abstract class DAO<T extends Model> {
   late String table;
 
-  Future<int> insert(T) async {
+  Future<String> insert(T) async {
     http.Response res = await API.post(
       table: table,
       operation: 'insert',
-      json: T.toMap(),
+      json: json.encode(T.toMap()),
     );
-    return res.statusCode;
+    return res.body;
   }
 
-  Future<int> delete(
+  Future<String> delete(
       {required String where, required dynamic whereArgs}) async {
     http.Response res = await API.post(
       table: table,
@@ -25,16 +25,16 @@ abstract class DAO<T extends Model> {
         "whereArgs": whereArgs,
       }),
     );
-    return res.statusCode;
+    return res.body;
   }
 
-  Future<int> update(T) async {
+  Future<String> update(T) async {
     http.Response res = await API.post(
       table: table,
       operation: 'update',
-      json: T.toMap(),
+      json: json.encode(T.toMap()),
     );
-    return res.statusCode;
+    return res.body;
   }
 
   Future<dynamic> get(
@@ -47,7 +47,7 @@ abstract class DAO<T extends Model> {
           "whereArgs": whereArgs,
         }));
     if (res.statusCode == 201) {
-      return jsonDecode(res.body);
+      return json.decode(res.body);
     } else {
       throw Exception('Failed to get data.');
     }
@@ -60,7 +60,7 @@ abstract class DAO<T extends Model> {
     );
 
     if (res.statusCode == 200) {
-      return jsonDecode(res.body);
+      return json.decode(res.body);
     } else {
       throw Exception('Failed to get data.');
     }
