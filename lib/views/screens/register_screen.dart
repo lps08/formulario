@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:formulario/controllers/dao/client_dao.dart';
 import 'package:formulario/controllers/validate.dart';
+import 'package:formulario/models/client.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -51,8 +53,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(height: 20),
                     InputDateRegister(
                       hintText: 'Data de nascimento',
-                      dateSelected: (date) =>
-                          cliente!['nascimento'] = date.toUtc().toString(),
+                      dateSelected: (date) => cliente!['nascimento'] =
+                          date.toUtc().toString().split(' ')[0],
                     ),
                     SizedBox(height: 20),
                     InputTextFieldRegister(
@@ -73,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       hintText: 'Endereço',
                       inputKeyboradType: TextInputType.streetAddress,
                       validator: (value) => Validate.onlyString(value!),
-                      onEditing: (value) => cliente!['endereco'],
+                      onEditing: (value) => cliente!['endereco'] = value,
                     ),
                     SizedBox(height: 20),
                     InputTextFieldRegister(
@@ -96,8 +98,20 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () => print(cliente),
                 child: Text('Confirmar'),
+                onPressed: () async {
+                  Client clinet = Client.fromMap(cliente!);
+                  print(clinet.toMap());
+                  ClientDAO clientDAO = ClientDAO();
+                  String res = await clientDAO.insert(clinet);
+
+                  if (res == 'success')
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Usuario adicionado')));
+                  else
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text('Erro!')));
+                },
               ),
             ],
           ),
