@@ -27,7 +27,7 @@ class Client implements Model {
   });
 
   factory Client.fromMap(Map<String, dynamic> json) => Client(
-        id: json['id'],
+        id: int.parse(json['id']),
         nome: json['nome'],
         sexo: json['sexo'],
         nascimento: json['nascimento'],
