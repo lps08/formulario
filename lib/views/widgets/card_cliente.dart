@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:formulario/models/client.dart';
 
 class CardCliente extends StatelessWidget {
+  final Client client;
+
+  CardCliente({required this.client});
+
+  //TODO: create delete, edit buttom
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,9 +22,12 @@ class CardCliente extends StatelessWidget {
               ),
             ),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextCardTitle(title: 'Nome: ', name: 'Nome do Usuario'),
-                TextCardTitle(title: 'Nascimento: ', name: 'nascimento')
+                TextCardTitle(title: 'Nome: ', name: client.nome),
+                TextCardTitle(
+                    title: 'Nascimento: ',
+                    name: client.nascimento.split(' ')[0])
               ],
             )
           ],
