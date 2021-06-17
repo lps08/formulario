@@ -37,7 +37,7 @@ abstract class DAO<T extends Model> {
     return res.body;
   }
 
-  Future<dynamic> get(
+  Future<List<dynamic>> get(
       {required String where, required dynamic whereArgs}) async {
     http.Response res = await API.post(
         table: table,
@@ -53,7 +53,7 @@ abstract class DAO<T extends Model> {
     }
   }
 
-  Future<dynamic> getAll() async {
+  Future<List<dynamic>> getAll() async {
     http.Response res = await API.get(
       table: table,
       operation: 'getAll',
