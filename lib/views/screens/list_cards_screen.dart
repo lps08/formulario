@@ -1,39 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:formulario/controllers/dao/client_dao.dart';
-import 'package:formulario/views/widgets/card_cliente.dart';
-
-//TODO: implment cards list
 
 class ListCardsPage extends StatefulWidget {
-  const ListCardsPage({Key? key}) : super(key: key);
+  final List<Widget> containers;
+
+  ListCardsPage({required this.containers});
 
   @override
-  _ListCardsPageState createState() => _ListCardsPageState();
-}
-
-ClientDAO _clientDAO = ClientDAO();
-
-void _getWidgetsCards() async {
-  List<Widget> containers = [];
-
-  var listClients = await _clientDAO.getAll();
-  print(listClients.length());
+  _ListCardsPageState createState() =>
+      _ListCardsPageState(containers: containers);
 }
 
 class _ListCardsPageState extends State<ListCardsPage> {
+  List<Widget> containers;
+
+  _ListCardsPageState({required this.containers});
+
   @override
   Widget build(BuildContext context) {
-    _getWidgetsCards();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista clientes'),
+        title: Text('Lista de clientes'),
       ),
-      body: SafeArea(
-          child: Column(
-        children: [
-          CardCliente(),
-        ],
-      )),
+      body: SingleChildScrollView(
+        child: SafeArea(
+            child: Column(
+          children: containers,
+        )),
+      ),
     );
   }
 }
