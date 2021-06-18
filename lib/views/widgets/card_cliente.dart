@@ -9,7 +9,6 @@ class CardCliente extends StatelessWidget {
   CardCliente(
       {required this.client, required this.onEditing, required this.onRemove});
 
-  //TODO: create delete, edit buttom
   @override
   Widget build(BuildContext context) {
     return Container(
