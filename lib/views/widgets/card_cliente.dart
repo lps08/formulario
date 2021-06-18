@@ -3,8 +3,11 @@ import 'package:formulario/models/client.dart';
 
 class CardCliente extends StatelessWidget {
   final Client client;
+  final void Function() onEditing;
+  final void Function() onRemove;
 
-  CardCliente({required this.client});
+  CardCliente(
+      {required this.client, required this.onEditing, required this.onRemove});
 
   //TODO: create delete, edit buttom
   @override
@@ -12,22 +15,42 @@ class CardCliente extends StatelessWidget {
     return Container(
       child: Card(
         elevation: 5.0,
-        child: Row(
+        child: Column(
           children: [
-            Container(
-              height: 100,
-              width: 100,
-              child: FittedBox(
-                child: Icon(Icons.account_box),
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
               children: [
-                TextCardTitle(title: 'Nome: ', name: client.nome),
-                TextCardTitle(
-                    title: 'Nascimento: ',
-                    name: client.nascimento.split(' ')[0])
+                Container(
+                  height: 100,
+                  width: 100,
+                  child: FittedBox(
+                    child: Icon(Icons.account_box),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextCardTitle(title: 'Nome: ', name: client.nome),
+                    TextCardTitle(
+                        title: 'Nascimento: ',
+                        name: client.nascimento.split(' ')[0])
+                  ],
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: onEditing,
+                  child: Text('Editar'),
+                ),
+                SizedBox(
+                  width: 10.0,
+                ),
+                TextButton(
+                  onPressed: onRemove,
+                  child: Text('Excluir'),
+                ),
               ],
             )
           ],
