@@ -13,20 +13,22 @@ class LoadingCardsPage extends StatefulWidget {
 }
 
 class _LoadingCardsPageState extends State<LoadingCardsPage> {
-  List<Widget> _clientsCards = [];
+  List<Client> _clients = [];
   ClientDAO _dao = ClientDAO();
 
   void _getClienteList() async {
     var clientList = await _dao.getAll();
     if (clientList.isNotEmpty) {
       clientList.forEach((element) {
-        _clientsCards.add(CardCliente(client: Client.fromMap(element)));
+        _clients.add(Client.fromMap(element));
       });
 
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => ListCardsPage(containers: _clientsCards),
+          builder: (context) => ListCardsPage(
+            clients: _clients,
+          ),
         ),
       );
     }
@@ -41,9 +43,9 @@ class _LoadingCardsPageState extends State<LoadingCardsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SpinKitRotatingCircle(
-        color: Colors.black,
-        size: 150.0,
+      body: SpinKitRipple(
+        color: Theme.of(context).accentColor,
+        size: 300.0,
       ),
     );
   }
