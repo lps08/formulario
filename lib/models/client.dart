@@ -27,7 +27,7 @@ class Client implements Model {
   });
 
   factory Client.fromMap(Map<String, dynamic> json) => Client(
-        id: int.parse(json['id']),
+        id: int.parse(json['id'].toString()),
         nome: json['nome'],
         sexo: json['sexo'],
         nascimento: json['nascimento'],
@@ -39,7 +39,9 @@ class Client implements Model {
       );
 
   @override
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toMap() {
+    if (id == null)
+      return {
         'nome': nome,
         'sexo': sexo,
         'nascimento': nascimento,
@@ -49,4 +51,17 @@ class Client implements Model {
         'bairro': bairro,
         'municipio': municipio,
       };
+    else
+      return {
+        'id': id,
+        'nome': nome,
+        'sexo': sexo,
+        'nascimento': nascimento,
+        'raca': raca,
+        'telefone': telefone,
+        'endereco': endereco,
+        'bairro': bairro,
+        'municipio': municipio,
+      };
+  }
 }
