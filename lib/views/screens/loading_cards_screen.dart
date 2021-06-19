@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:formulario/controllers/dao/client_dao.dart';
 import 'package:formulario/models/client.dart';
 import 'package:formulario/views/screens/list_cards_screen.dart';
-import 'package:formulario/views/widgets/card_cliente.dart';
 
 class LoadingCardsPage extends StatefulWidget {
   const LoadingCardsPage({Key? key}) : super(key: key);

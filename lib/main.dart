@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:formulario/views/screens/list_cards_screen.dart';
 import 'package:formulario/views/screens/loading_cards_screen.dart';
 
 void main() {
