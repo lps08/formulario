@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:formulario/controllers/dao/client_dao.dart';
+import 'package:formulario/controllers/delegate/custom_search_delegate.dart';
 import 'package:formulario/models/client.dart';
 import 'package:formulario/views/screens/loading_cards_screen.dart';
 import 'package:formulario/views/screens/update_screen.dart';
@@ -25,6 +26,7 @@ class _ListCardsPageState extends State<ListCardsPage> {
     if (clients.isNotEmpty) {
       clients.forEach((element) {
         containers.add(CardCliente(
+          onPress: () => print('press'),
           client: element,
           onEditing: () => Navigator.push(
             context,
@@ -58,6 +60,16 @@ class _ListCardsPageState extends State<ListCardsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Lista de clientes'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search_rounded),
+            onPressed: () {
+              showSearch(
+                  context: context,
+                  delegate: CustomSearchDelegate(clients: clients));
+            },
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: SafeArea(
