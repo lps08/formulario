@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:formulario/models/client.dart';
+import 'package:formulario/views/screens/client_screen.dart';
 import 'package:formulario/views/widgets/card_cliente.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   final List<Client> clients;
+  final context;
 
-  CustomSearchDelegate({required this.clients});
+  CustomSearchDelegate({required this.clients, required this.context});
 
   List<Client> _getResultQuery() {
     List<Client> result = [];
@@ -21,7 +23,11 @@ class CustomSearchDelegate extends SearchDelegate {
 
     _getResultQuery().forEach((cli) {
       resultCards.add(CardCliente(
-        onPress: () => print('press'),
+        onPress: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ClientPage(client: cli),
+            )),
         client: cli,
       ));
     });
