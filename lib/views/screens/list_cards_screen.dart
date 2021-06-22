@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:formulario/controllers/dao/client_dao.dart';
 import 'package:formulario/controllers/delegate/custom_search_delegate.dart';
 import 'package:formulario/models/client.dart';
-import 'package:formulario/views/screens/loading_cards_screen.dart';
-import 'package:formulario/views/screens/update_screen.dart';
+import 'package:formulario/views/screens/client_screen.dart';
 import 'package:formulario/views/widgets/card_cliente.dart';
 
 class ListCardsPage extends StatefulWidget {
@@ -17,7 +15,6 @@ class ListCardsPage extends StatefulWidget {
 
 class _ListCardsPageState extends State<ListCardsPage> {
   List<Client> clients;
-  ClientDAO _dao = ClientDAO();
 
   _ListCardsPageState({required this.clients});
 
@@ -26,29 +23,14 @@ class _ListCardsPageState extends State<ListCardsPage> {
     if (clients.isNotEmpty) {
       clients.forEach((element) {
         containers.add(CardCliente(
-          onPress: () => print('press'),
-          client: element,
-          onEditing: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => UpdatePage(client: element),
-            ),
-          ),
-          onRemove: () async {
-            String res =
-                await _dao.delete(where: 'nome', whereArgs: element.nome);
-            if (res == 'success') {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text('Usuario excluido.')));
-
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LoadingCardsPage(),
+          onPress: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ClientPage(
+                  client: element,
                 ),
-              );
-            }
-          },
+              )),
+          client: element,
         ));
       });
     }
@@ -66,7 +48,8 @@ class _ListCardsPageState extends State<ListCardsPage> {
             onPressed: () {
               showSearch(
                   context: context,
-                  delegate: CustomSearchDelegate(clients: clients));
+                  delegate:
+                      CustomSearchDelegate(clients: clients, context: context));
             },
           )
         ],
