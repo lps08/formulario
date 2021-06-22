@@ -42,26 +42,6 @@ class CardCliente extends StatelessWidget {
                   )
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  onEditing != null
-                      ? TextButton(
-                          onPressed: onEditing,
-                          child: Text('Editar'),
-                        )
-                      : Text(''),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  onRemove != null
-                      ? TextButton(
-                          onPressed: onRemove,
-                          child: Text('Excluir'),
-                        )
-                      : Text(''),
-                ],
-              )
             ],
           ),
         ),
