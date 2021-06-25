@@ -17,19 +17,48 @@ class _LoadingCardsPageState extends State<LoadingCardsPage> {
   ClientDAO _dao = ClientDAO();
 
   void _getClienteList() async {
-    var clientList = await _dao.getAll();
-    if (clientList.isNotEmpty) {
-      clientList.forEach((element) {
-        _clients.add(Client.fromMap(element));
-      });
+    try {
+      var clientList = await _dao.getAll();
+      if (clientList.isNotEmpty) {
+        clientList.forEach((element) {
+          _clients.add(Client.fromMap(element));
+        });
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ListCardsPage(
-            clients: _clients,
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ListCardsPage(
+              clients: _clients,
+            ),
           ),
-        ),
+        );
+      }
+    } catch (e) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('AlertDialog Title'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: const <Widget>[
+                  Text('Erro!'),
+                  Text(
+                      'Não foi possível buscar registro no banco de dados. Verifique sua conexão com a internet.'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
       );
     }
   }
