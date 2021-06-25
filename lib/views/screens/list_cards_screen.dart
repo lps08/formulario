@@ -33,7 +33,10 @@ class _ListCardsPageState extends State<ListCardsPage> {
           client: element,
         ));
       });
-    }
+    } else
+      containers.add(Center(
+        child: Text('Nenhum registro encontrado.'),
+      ));
     return containers;
   }
 
