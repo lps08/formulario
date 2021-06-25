@@ -19,7 +19,8 @@ class CardCliente extends StatelessWidget {
       child: InkWell(
         onTap: onPress,
         child: Card(
-          elevation: 5.0,
+          margin: EdgeInsets.all(10.0),
+          elevation: 8.0,
           child: Column(
             children: [
               Row(
