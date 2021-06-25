@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:formulario/controllers/delegate/custom_search_delegate.dart';
 import 'package:formulario/models/client.dart';
-import 'package:formulario/views/screens/client_screen.dart';
+import 'package:formulario/views/screens/client_info_screen.dart';
+import 'package:formulario/views/screens/register_screen.dart';
 import 'package:formulario/views/widgets/card_cliente.dart';
 
 class ListCardsPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class _ListCardsPageState extends State<ListCardsPage> {
 
   _ListCardsPageState({required this.clients});
 
-  List<Widget> _getContainers() {
+  Column _getContainers() {
     List<Widget> containers = [];
     if (clients.isNotEmpty) {
       clients.forEach((element) {
@@ -33,16 +34,62 @@ class _ListCardsPageState extends State<ListCardsPage> {
           client: element,
         ));
       });
+
+      return Column(
+        children: containers,
+      );
     } else
-      containers.add(Center(
-        child: Text('Nenhum registro encontrado.'),
-      ));
-    return containers;
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Center(child: Text('Nenhum registro encontrado.')),
+          )
+        ],
+      );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        elevation: 5.0,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Center(
+                child: Text(
+                  'Menu',
+                  style: TextStyle(
+                    fontSize: 26,
+                    color: Theme.of(context).accentIconTheme.color,
+                  ),
+                ),
+              ),
+            ),
+            ListTile(
+              title: Text(
+                'Adicionar paciente',
+                style: TextStyle(fontSize: 16),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => RegisterPage(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: Text('Lista de pacientes'),
         actions: [
@@ -58,10 +105,7 @@ class _ListCardsPageState extends State<ListCardsPage> {
         ],
       ),
       body: SingleChildScrollView(
-        child: SafeArea(
-            child: Column(
-          children: _getContainers(),
-        )),
+        child: _getContainers(),
       ),
     );
   }
