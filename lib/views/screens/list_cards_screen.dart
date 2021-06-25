@@ -44,7 +44,7 @@ class _ListCardsPageState extends State<ListCardsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de clientes'),
+        title: Text('Lista de pacientes'),
         actions: [
           IconButton(
             icon: Icon(Icons.search_rounded),
