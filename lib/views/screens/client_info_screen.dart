@@ -20,6 +20,51 @@ class _ClientPageState extends State<ClientPage> {
 
   _ClientPageState({required this.client});
 
+  Future<void> _removingClientDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Atenção'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Deseja realmente excluir?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Ok'),
+              onPressed: () async {
+                String res =
+                    await _dao.delete(where: 'nome', whereArgs: client.nome);
+                if (res == 'success') {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Usuario excluido.')));
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoadingCardsPage(),
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,21 +144,7 @@ class _ClientPageState extends State<ClientPage> {
                           'Remover',
                           style: TextStyle(fontSize: 18),
                         ),
-                        onPressed: () async {
-                          String res = await _dao.delete(
-                              where: 'nome', whereArgs: client.nome);
-                          if (res == 'success') {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Usuario excluido.')));
-
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoadingCardsPage(),
-                              ),
-                            );
-                          }
-                        },
+                        onPressed: _removingClientDialog,
                       )
                     ],
                   ),
