@@ -4,6 +4,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:formulario/controllers/dao/client_dao.dart';
 import 'package:formulario/controllers/validate.dart';
 import 'package:formulario/models/client.dart';
+import 'package:formulario/views/screens/loading_cards_screen.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -113,15 +114,20 @@ class ButtonConfirmarBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        Client clinet = Client.fromMap(cliente!);
-        print(clinet.toMap());
+        Client cli = Client.fromMap(cliente!);
+        print(cli.toMap());
         ClientDAO clientDAO = ClientDAO();
-        String res = await clientDAO.insert(clinet);
+        String res = await clientDAO.insert(cli);
 
-        if (res == 'success')
+        if (res == 'success') {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text('Usuario adicionado')));
-        else
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LoadingCardsPage(),
+              ));
+        } else
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text('Erro!')));
       },
