@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:formulario/models/client.dart';
-import 'package:formulario/views/screens/client_screen.dart';
+import 'package:formulario/views/screens/client_info_screen.dart';
 import 'package:formulario/views/widgets/card_cliente.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
@@ -64,7 +64,7 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    if (query.isNotEmpty)
+    if (query.length > 1)
       return Column(
         children: _getContainersResults(),
       );
