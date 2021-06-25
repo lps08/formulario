@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:formulario/views/screens/loading_cards_screen.dart';
 
-//TODO: fix when conection drop down
-
 void main() {
   runApp(MyApp());
 }
