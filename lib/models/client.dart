@@ -26,7 +26,9 @@ class Client implements Model {
     this.atendimento,
   });
 
-  factory Client.fromMap(Map<String, dynamic> json) => Client(
+  factory Client.fromMap(Map<String, dynamic> json) {
+    if (json['id'] != null) {
+      return Client(
         id: int.parse(json['id'].toString()),
         nome: json['nome'],
         sexo: json['sexo'],
@@ -37,6 +39,18 @@ class Client implements Model {
         bairro: json['bairro'],
         municipio: json['municipio'],
       );
+    } else
+      return Client(
+        nome: json['nome'],
+        sexo: json['sexo'],
+        nascimento: json['nascimento'],
+        raca: json['raca'],
+        telefone: json['telefone'],
+        endereco: json['endereco'],
+        bairro: json['bairro'],
+        municipio: json['municipio'],
+      );
+  }
 
   @override
   Map<String, dynamic> toMap() {
