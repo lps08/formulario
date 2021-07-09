@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:formulario/controllers/dao/client_dao.dart';
+import 'package:formulario/controllers/helper/zipcode.dart';
 import 'package:formulario/controllers/validate.dart';
 import 'package:formulario/models/client.dart';
 import 'package:formulario/views/screens/loading_cards_screen.dart';
@@ -69,6 +70,31 @@ class _RegisterPageState extends State<RegisterPage> {
                   inputKeyboradType: TextInputType.phone,
                   validator: (value) => Validate.onlyNumber(value!),
                   onEditing: (value) => cliente!['telefone'] = value,
+                ),
+                SizedBox(height: 20),
+                InputTextFieldRegister(
+                  hintText: 'Cep',
+                  controller: MaskedTextController(mask: "00000-000"),
+                  inputKeyboradType: TextInputType.phone,
+                  validator: (value) => Validate.onlyNumber(value!),
+                  onEditing: (value) => cliente!['cep'] = value,
+                ),
+                SizedBox(height: 20),
+                InputTextFieldRegister(
+                  hintText: 'Localidade',
+                  controller:
+                      TextEditingController(text: cliente!['localidade']),
+                  inputKeyboradType: TextInputType.streetAddress,
+                  validator: (value) => Validate.onlyString(value!),
+                  onEditing: (value) => cliente!['localidade'] = value,
+                ),
+                SizedBox(height: 20),
+                InputTextFieldRegister(
+                  hintText: 'UF',
+                  controller: TextEditingController(text: cliente!['uf']),
+                  inputKeyboradType: TextInputType.streetAddress,
+                  validator: (value) => Validate.onlyString(value!),
+                  onEditing: (value) => cliente!['uf'] = value,
                 ),
                 SizedBox(height: 20),
                 InputTextFieldRegister(
