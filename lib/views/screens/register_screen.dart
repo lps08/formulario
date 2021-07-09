@@ -5,6 +5,7 @@ import 'package:formulario/controllers/dao/client_dao.dart';
 import 'package:formulario/controllers/validate.dart';
 import 'package:formulario/models/client.dart';
 import 'package:formulario/views/screens/loading_cards_screen.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -64,6 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 SizedBox(height: 20),
                 InputTextFieldRegister(
                   hintText: 'Telefone',
+                  controller: MaskedTextController(mask: "(00) 0 0000 0000"),
                   inputKeyboradType: TextInputType.phone,
                   validator: (value) => Validate.onlyNumber(value!),
                   onEditing: (value) => cliente!['telefone'] = value,
@@ -294,6 +296,7 @@ class InputTextFieldRegister extends StatelessWidget {
   final String hintText;
   final String? Function(String? value)? validator;
   final TextInputType inputKeyboradType;
+  final TextEditingController? controller;
   final void Function(dynamic value)? onEditing;
 
   InputTextFieldRegister({
@@ -301,12 +304,14 @@ class InputTextFieldRegister extends StatelessWidget {
     this.validator,
     required this.inputKeyboradType,
     this.onEditing,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: inputKeyboradType,
+      controller: controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
