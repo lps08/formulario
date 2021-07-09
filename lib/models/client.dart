@@ -8,6 +8,9 @@ class Client implements Model {
   final String nascimento;
   final String? raca;
   final String telefone;
+  final String? cep;
+  final String? localidade;
+  final String? uf;
   final String? endereco;
   final String? bairro;
   final String? municipio;
@@ -20,6 +23,9 @@ class Client implements Model {
     required this.nascimento,
     this.raca,
     required this.telefone,
+    this.cep,
+    this.localidade,
+    this.uf,
     this.endereco,
     this.bairro,
     this.municipio,
@@ -35,6 +41,9 @@ class Client implements Model {
         nascimento: json['nascimento'],
         raca: json['raca'],
         telefone: json['telefone'],
+        cep: json['cep'],
+        localidade: json['localidade'],
+        uf: json['uf'],
         endereco: json['endereco'],
         bairro: json['bairro'],
         municipio: json['municipio'],
@@ -46,6 +55,9 @@ class Client implements Model {
         nascimento: json['nascimento'],
         raca: json['raca'],
         telefone: json['telefone'],
+        cep: json['cep'],
+        localidade: json['localidade'],
+        uf: json['uf'],
         endereco: json['endereco'],
         bairro: json['bairro'],
         municipio: json['municipio'],
@@ -61,6 +73,9 @@ class Client implements Model {
         'nascimento': nascimento,
         'raca': raca,
         'telefone': telefone,
+        'cep': cep,
+        'localidade': localidade,
+        'uf': uf,
         'endereco': endereco,
         'bairro': bairro,
         'municipio': municipio,
@@ -73,6 +88,9 @@ class Client implements Model {
         'nascimento': nascimento,
         'raca': raca,
         'telefone': telefone,
+        'cep': cep,
+        'localidade': localidade,
+        'uf': uf,
         'endereco': endereco,
         'bairro': bairro,
         'municipio': municipio,
