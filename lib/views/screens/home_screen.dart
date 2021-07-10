@@ -17,6 +17,8 @@ class _HomeState extends State<Home> {
     });
   }
 
+  //TODO: make the menu with titles large, like cards to main menu
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
