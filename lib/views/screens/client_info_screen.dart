@@ -108,16 +108,24 @@ class _ClientPageState extends State<ClientPage> {
                   value: client.telefone,
                 ),
                 TextInfoFields(
+                  title: 'Cep: ',
+                  value: client.cep!,
+                ),
+                TextInfoFields(
+                  title: 'Telefone: ',
+                  value: client.localidade!,
+                ),
+                TextInfoFields(
+                  title: 'Telefone: ',
+                  value: client.uf!,
+                ),
+                TextInfoFields(
                   title: 'Endereço: ',
                   value: client.endereco!,
                 ),
                 TextInfoFields(
                   title: 'Bairro: ',
                   value: client.bairro!,
-                ),
-                TextInfoFields(
-                  title: 'Município: ',
-                  value: client.municipio!,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
