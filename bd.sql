@@ -14,7 +14,6 @@ CREATE TABLE Cliente (
     uf                      varchar(15),
     endereco                varchar(50),
     bairro                  varchar(20),
-    municipio               varchar(20),
     PRIMARY KEY(id)
 );
 
