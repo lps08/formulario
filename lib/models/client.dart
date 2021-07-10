@@ -13,7 +13,6 @@ class Client implements Model {
   final String? uf;
   final String? endereco;
   final String? bairro;
-  final String? municipio;
   final Atendimento? atendimento;
 
   Client({
@@ -28,8 +27,7 @@ class Client implements Model {
     this.uf,
     this.endereco,
     this.bairro,
-    this.municipio,
-    this.atendimento,
+    this.atendimento, //falta esse
   });
 
   factory Client.fromMap(Map<String, dynamic> json) {
@@ -46,7 +44,6 @@ class Client implements Model {
         uf: json['uf'],
         endereco: json['endereco'],
         bairro: json['bairro'],
-        municipio: json['municipio'],
       );
     } else
       return Client(
@@ -60,7 +57,6 @@ class Client implements Model {
         uf: json['uf'],
         endereco: json['endereco'],
         bairro: json['bairro'],
-        municipio: json['municipio'],
       );
   }
 
@@ -78,7 +74,6 @@ class Client implements Model {
         'uf': uf,
         'endereco': endereco,
         'bairro': bairro,
-        'municipio': municipio,
       };
     else
       return {
@@ -93,7 +88,6 @@ class Client implements Model {
         'uf': uf,
         'endereco': endereco,
         'bairro': bairro,
-        'municipio': municipio,
       };
   }
 }
