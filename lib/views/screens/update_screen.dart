@@ -27,9 +27,11 @@ class _UpdatePageState extends State<UpdatePage> {
       'nascimento': client.nascimento,
       'raca': client.raca,
       'telefone': client.telefone,
+      'cep': client.cep,
+      'localidade': client.localidade,
+      'uf': client.uf,
       'endereco': client.endereco,
       'bairro': client.bairro,
-      'municipio': client.municipio,
     };
   }
 
@@ -115,14 +117,6 @@ class _UpdatePageState extends State<UpdatePage> {
                   inputKeyboradType: TextInputType.name,
                   validator: (value) => Validate.onlyString(value!),
                   onEditing: (value) => cliente!['bairro'] = value,
-                ),
-                SizedBox(height: 20),
-                InputTextFieldRegister(
-                  hintText: 'Município',
-                  controller: TextEditingController(text: client.municipio),
-                  inputKeyboradType: TextInputType.name,
-                  validator: (value) => Validate.onlyString(value!),
-                  onEditing: (value) => cliente!['municipio'] = value,
                 ),
                 SizedBox(
                   height: 50,
