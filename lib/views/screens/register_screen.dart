@@ -66,7 +66,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 SizedBox(height: 20),
                 InputTextFieldRegister(
                   hintText: 'Telefone',
-                  controller: MaskedTextController(mask: "(00) 0 0000 0000"),
+                  controller: MaskedTextController(
+                      mask: "(00) 0 0000 0000", text: cliente!['telefone']),
                   inputKeyboradType: TextInputType.phone,
                   validator: (value) => Validate.onlyNumber(value!),
                   onEditing: (value) => cliente!['telefone'] = value,
@@ -74,10 +75,25 @@ class _RegisterPageState extends State<RegisterPage> {
                 SizedBox(height: 20),
                 InputTextFieldRegister(
                   hintText: 'Cep',
-                  controller: MaskedTextController(mask: "00000-000"),
+                  controller: MaskedTextController(
+                      mask: "00000-000", text: cliente!['cep']),
                   inputKeyboradType: TextInputType.phone,
                   validator: (value) => Validate.onlyNumber(value!),
-                  onEditing: (value) => cliente!['cep'] = value,
+                  onEditing: (value) async {
+                    cliente!['cep'] = value;
+                    try {
+                      int val = int.parse(value.toString().replaceAll('-', ''));
+                      var res = await ZipCode.getLocate(val);
+
+                      setState(() {
+                        cliente!['localidade'] = res['localidade'];
+                        cliente!['uf'] = res['uf'];
+                        cliente!['bairro'] = res['bairro'];
+                      });
+
+                      print(res);
+                    } catch (e) {}
+                  },
                 ),
                 SizedBox(height: 20),
                 InputTextFieldRegister(
@@ -111,12 +127,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   onEditing: (value) => cliente!['bairro'] = value,
                 ),
                 SizedBox(height: 20),
-                InputTextFieldRegister(
-                  hintText: 'Município',
-                  inputKeyboradType: TextInputType.name,
-                  validator: (value) => Validate.onlyString(value!),
-                  onEditing: (value) => cliente!['municipio'] = value,
-                ),
                 SizedBox(
                   height: 50,
                 ),
@@ -140,6 +150,9 @@ class ButtonConfirmarBottom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    cliente!['telefone'] =
+        cliente!['telefone'].toString().replaceAll(RegExp(r"\W\S"), '');
+    cliente!['cep'] = cliente!['cep'].toString().replaceAll(RegExp('\W\S'), '');
     return InkWell(
       onTap: () async {
         Client cli = Client.fromMap(cliente!);
